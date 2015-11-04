@@ -3,6 +3,8 @@ My autoHotKey script for development
 
 http://www.autohotkey.com/
 
+AutoHotkey is a free, open-source custom scripting language for Microsoft Windows, initially aimed at providing easy keyboard shortcuts or hotkeys, fast macro-creation and software automation that allows users of most levels of computer skill to automate repetitive tasks in any Microsoft Windows application.
+
 AutoHotKey can be used for a variety of tasks. Here you will find some scripts and ideas.
 
 ##To Install:
