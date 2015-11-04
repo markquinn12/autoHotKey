@@ -1,5 +1,5 @@
 # autoHotKey
-My autoHotKey script for development
+My autoHotKey script for development tasks
 
 http://www.autohotkey.com/
 
