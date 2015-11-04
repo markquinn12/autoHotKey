@@ -20,7 +20,7 @@
 ; Win-W: runs maven clean install -DskipTests on bagmanager-webapp
 
 ;########################################### Win-C ###########################################################
-; Win-C: open a command prompt for active window or else c:
+; Win-C: open a command prompt for active window or else c:\
 ;   - if a folder window is active, the command prompt will start in that directory;
 ;   - otherwise the command prompt will open in whatever directory you specify as the default below
 #c::
