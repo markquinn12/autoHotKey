@@ -1,29 +1,56 @@
-;########################################## Resources ########################################################
+;########################################## Resources #############################################################
 ;# Win (Windows logo key) 
 ;! Alt 
 ;^ Control 
 ;+ Shift 
 ;&  An ampersand may be used between any two keys or mouse buttons to combine them into a custom hotkey.  
-;########################################## Commands ########################################################
+
+;########################################## Commands ##############################################################
 ; Win-C: open a command prompt for active window or else c:
 ; Win-B: open the documents folder
 ; Win-K: open the documents folder
 ; Win-H: open the HEAD folder
 ; Win-M: open misc.txt file in notepad++ and place cursor at end of file
-; CTRL+SHIFT+C: copy highlighted text, open my misc.txt file in notepad++, place cursor at end of file, jump to new line and paste text
+; CTRL+D: copy highlighted text, open my misc.txt file in notepad++, place cursor at end of file, jump to new line and paste text
 ; Win-N: open selected file in notepad++
 ; Win-J: open Jboss deploy directory
-; Win-I: send: mvn clean install
-; Win-S: send: mvn clean install -DskipTests
 ; Win-A: opens autohotkey file
 ; Win-Q: copy bsm file: aFileToCopy.txt to input/bim folder
-; Win-R: runs maven clean install on head directory
-; Win-W: runs maven clean install -DskipTests on bagmanager-webapp
+; Win-.: opens the Tortoise SVN commit screen at our head directory
+; Win-/: opens the Tortoise SVN log screen at our head directory
+; Win-I: runs our system interface bat file
 
-;########################################## Commands ########################################################
+;########################################## HotStrings #############################################################
 ; passkey: enters my passpack key
+; mvnc: sends mvn clean install
+; mvns: sends mvn clean install -DskipTests
+; runr: runs maven clean install on head directory
+; runw: runs maven clean install -DskipTests on bagmanager-webapp
+; runj: runs maven clean install -DskipTests on bagmanager-junit
 
-;########################################### Win-C ###########################################################
+;########################################## Global Variables ######################################################
+global headDirectory := "C:\HEAD"
+global bagmanagerDocs := "C:\Users\bagmanager\Dropbox\Bagmanager"
+global bmgrDirectory := "C:\appl\sita\bmgr"
+
+global jbossLogs := "C:\jbdevstudio\runtimes\jboss-eap\standalone\log"
+global deployDirectory := bmgrDirectory . "\deploy"
+global notePadPlusPlus := "C:\Program Files (x86)\Notepad++\notepad++.exe"
+global miscFile := bagmanagerDocs . "\Misc docs\misc.txt"
+global aFileToCopy := "C:\BSM's\BSM Types\aFileToCopy.txt"
+global bimDirectory := bmgrDirectory . "\input\bim"
+global autohotKeyFile := "C:\GitRepositories\autoHotKey\autoHotKey.ahk"
+global tortoiseSvn := "C:\Program Files\TortoiseSVN\bin\TortoiseProc.exe"
+global webappDirectory := headDirectory . "\bagmanager\bagmanager-webapp"
+global junitDirectory := headDirectory . "\bagmanager\bagmanager-junit"
+global systemInterfaceDirectory := bmgrDirectory . "\system-interface\bin"
+global systemInterface := "sysi-bootstrap-console.bat"
+
+;####################################################################################################################
+;########################################### Commands ###############################################################
+;####################################################################################################################
+
+;########################################### Win-C ##################################################################
 ; Win-C: open a command prompt for active window or else c:
 ;   - if a folder window is active, the command prompt will start in that directory;
 ;   - otherwise the command prompt will open in whatever directory you specify as the default below
@@ -33,119 +60,108 @@
 	if (activeWinClass = "CabinetWClass" or activeWinClass = "ExploreWClass")
 		Run,%ComSpec%,%activeWinTitle%
 	else
-		; change "C:\Temp" to whatever default directory you want
 		Run,%ComSpec%,C:\
 return
 
-;########################################### Win-B ###########################################################
+;########################################### Win-B ##################################################################
 ; Win-B: open the documents folder
 #b::
-	Run, "C:\Users\bagmanager\Dropbox\Bagmanager"
+	Run, %bagmanagerDocs%
 return
 
-;########################################### Win-K ###########################################################
+;########################################### Win-K ##################################################################
 ; Win-K: open the documents folder (Win-L logs me out of the machine!)
 #k::
-	Run, "C:\jbdevstudio\runtimes\jboss-eap\standalone\log"
+	Run, %jbossLogs%
 return
 
-;########################################### Win-H ###########################################################
+;########################################### Win-H ##################################################################
 ; Win-H: open the HEAD folder
 #h::
-	Run, "C:\HEAD"
+	Run, %headDirectory%
 return
 
-;########################################### Win-J ###########################################################
+;########################################### Win-J ##################################################################
 ; Win-J: open the Jboss deploy folder
 #j::
-	Run, "C:\appl\sita\bmgr\deploy"
+	Run, %deployDirectory%
 return
 
-;########################################### Win-M ###########################################################
+;########################################### Win-M ##################################################################
 ; Win-M: open my misc.txt file in notepad++ and place cursor at end of file
 #m::
-run, "C:\Program Files (x86)\Notepad++\notepad++.exe" C:\Users\bagmanager\Dropbox\Bagmanager\Misc docs\misc.txt
-sleep 500
-Winwaitactive, ahk_class Notepad++
-ControlGetFocus, control, A
-Send ^{End}
+	run, %notePadPlusPlus% %miscFile%
+	sleep 500
+	Winwaitactive, ahk_class Notepad++
+	ControlGetFocus, control, A
+	Send ^{End}
 return
 
-;########################################### Win-N ###########################################################
+;########################################### Win-N ##################################################################
 ; Win-N: open selected file in notepad++
 #n::
-ClipSaved := ClipboardAll
-Send ^c
-ClipWait
-FullPath := Clipboard
-run, "C:\Program Files (x86)\Notepad++\notepad++.exe" %FullPath%
-Clipboard := ClipSaved
-ClipSaved =
+	ClipSaved := ClipboardAll
+	Send ^c
+	ClipWait
+	FullPath := Clipboard
+	run, %notePadPlusPlus% %FullPath%
+	Clipboard := ClipSaved
+	ClipSaved =
 return
 
-;########################################### Win-I ###########################################################
-; Win-I: send: mvn clean install
-#i::
-	 Send, mvn clean install
-return
-
-
-;########################################### Win-S ###########################################################
-; Win-S: send: mvn clean install -DskipTests
-#s::
-	 Send, mvn clean install -DskipTests
-return
-
-;########################################### Win-Q ###########################################################
+;########################################### Win-Q ##################################################################
 ; Win-Q: copy bsm file: aFileToCopy.txt to input/bim folder
 #q::
-	 FileCopy, C:\BSM's\BSM Types\aFileToCopy.txt, C:\appl\sita\bmgr\input\bim
+	 FileCopy, %aFileToCopy%, %bimDirectory%
 return
 
-;########################################### Win-R ###########################################################
-; Win-R: run maven clean install on our head directory
-#r::
-	commands=
-		(join&
-			cd C:\HEAD\
-			mvn clean install -DskipTests
-		)
-	runwait, %comspec% /k %commands%
-return
-
-;########################################### Win-W ###########################################################
-; Win-W: run maven clean install -DskipTests on our bagmanager-webapp
-#w::
-	commands=
-		(join&
-			cd C:\HEAD\bagmanager\bagmanager-webapp\
-			mvn clean install -DskipTests
-		)
-	runwait, %comspec% /k %commands%
-return
-
-;########################################### Win-A ###########################################################
+;########################################### Win-A ##################################################################
 ; Win-A: open my autoHotKey.txt file in notepad++ and place cursor at end of file
 #a::
-run, "C:\Program Files (x86)\Notepad++\notepad++.exe" C:\GitRepositories\autoHotKey\autoHotKey.ahk
-sleep 500
-Winwaitactive, ahk_class Notepad++
-ControlGetFocus, control, A
-Send ^{Home}
+	run, %notePadPlusPlus% %autohotKeyFile%
+	sleep 500
+	Winwaitactive, ahk_class Notepad++
+	ControlGetFocus, control, A
+	Send ^{Home}
 return
 
-;########################################### CTRL+SHIFT+C ###########################################################
-; CTRL+SHIFT+C: copy highlighted text, open my misc.txt file in notepad++, place cursor at end of file, jump to new line and paste text
-^+c::
-Send ^{c}
-run, "C:\Program Files (x86)\Notepad++\notepad++.exe" C:\Users\bagmanager\Dropbox\Bagmanager\Misc docs\misc.txt
-sleep 500
-Winwaitactive, ahk_class Notepad++
-ControlGetFocus, control, A
-Send ^{End}
-Send  {Enter}{Home}{Enter}
-Send ^{v}
-Send ^{s}
+;########################################### Win-I ##################################################################
+; Win-I: start the system interface bat file
+#i::	
+	commands=
+		(join&
+			cd %systemInterfaceDirectory%
+			%systemInterface%
+		)
+	runwait, %comspec% /k %commands%	
+return
+
+;########################################### Win-. ##################################################################
+; Win-.: Opens the Tortoise SVN commit screen at our source code root
+#.::
+	cmd = %tortoiseSvn% /command:commit /path:%headDirectory% /notempfile /closeonend:3
+	run, %cmd%, %pth%,.
+return
+
+;########################################### Win-/ ##################################################################
+; Win-/: Opens the Tortoise SVN log screen at our source code root
+#/::
+	cmd = %tortoiseSvn% /command:log /path:%headDirectory% /notempfile /closeonend:3
+	run, %cmd%, %pth%,
+return
+
+;########################################### CTRL+D #################################################################
+; CTRL+D: copy highlighted text, open my misc.txt file in notepad++, place cursor at end of file, jump to new line and paste text
+^d::
+	Send ^{c}
+	run, %notePadPlusPlus% %miscFile%
+	sleep 500
+	Winwaitactive, ahk_class Notepad++
+	ControlGetFocus, control, A
+	Send ^{End}
+	Send  {Enter}{Home}{Enter}
+	Send ^{v}
+	Send ^{s}
 return
 
 ;####################################################################################################################
@@ -161,7 +177,7 @@ return
 ;########################################### CRTL-Numpad2 ###########################################################
 ; CRTL-Numpad2: open our tpOnDemand taskboard in chrome
 ^NumPad2::
-	Run, chrome.exe https://eugene.tpondemand.com/RestUI/Board.aspx?invite&acid=6C17D8319C81AC3D36AFAD64CAE08A28#page=board/5001197856453400685&appConfig=eyJhY2lkIjoiNUE2ODU3NUVFN0M1MzA0QzM5QTA5MENERkU0MjVFQkUifQ==
+	Run, chrome.exe https://eugene.tpondemand.com
 return
 
 ;########################################### CRTL-Numpad3 ###########################################################
@@ -209,3 +225,47 @@ return
 ::passkey::not checking this in!
 return
 
+;########################################### mvnc ###################################################################
+; hotstring to send mvn clean install
+::mvnc::
+	Send, mvn clean install
+return
+
+;########################################### mvns ###################################################################
+; hotstring to send mvn clean install -DskipTests
+::mvns::
+	Send, mvn clean install -DskipTests
+return
+
+;########################################### runr ###################################################################
+; hotstring to run mvn clean install -DskipTests on our head directory
+::runr::
+	commands=
+		(join&
+			cd %headDirectory%
+			mvn clean install -DskipTests
+		)
+	runwait, %comspec% /k %commands%
+return
+
+;########################################### runw ####################################################################
+; hotstring to run mvn clean install -DskipTests on our webapp directory
+::runw::
+	commands=
+		(join&
+			cd %webappDirectory%
+			mvn clean install -DskipTests
+		)
+	runwait, %comspec% /k %commands%
+return
+
+;########################################### runj ####################################################################
+; hotstring to run mvn clean install -DskipTests on our junit directory
+::runj::
+	commands=
+		(join&
+			cd %junitDirectory%
+			mvn clean install -DskipTests
+		)
+	runwait, %comspec% /k %commands%
+return
