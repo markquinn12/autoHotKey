@@ -18,3 +18,5 @@ Download my sample script: [autoHotKey.ahk](autoHotKey.ahk)
 You can double click on the .ahk file, this will execute the script and listen for commands. You can then see the autoHotKey icon on the task bar.
 
 A good idea is to create a shortcut to the script. Then place this shortcut in the windows "startup" folder which will execute the script upon startup.
+
+Only tested on Windows 7.

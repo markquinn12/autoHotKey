@@ -1,4 +1,5 @@
 ;########################################## Resources #############################################################
+;Tested for Windows 7 only
 ;# Win (Windows logo key) 
 ;! Alt 
 ;^ Control 
