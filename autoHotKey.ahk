@@ -12,7 +12,7 @@
 ; Win-K: open the documents folder
 ; Win-H: open the HEAD folder
 ; Win-M: open misc.txt file in notepad++ and place cursor at end of file
-; CTRL+D: copy highlighted text, open my misc.txt file in notepad++, place cursor at end of file, jump to new line and paste text
+; CTRL+X: copy highlighted text, open my misc.txt file in notepad++, place cursor at end of file, jump to new line and paste text
 ; Win-N: open selected file in notepad++
 ; Win-J: open Jboss deploy directory
 ; Win-A: opens autohotkey file
@@ -151,9 +151,9 @@ return
 	run, %cmd%, %pth%,
 return
 
-;########################################### CTRL+D #################################################################
-; CTRL+D: copy highlighted text, open my misc.txt file in notepad++, place cursor at end of file, jump to new line and paste text
-^d::
+;########################################### CTRL-X #################################################################
+; CTRL+X: copy highlighted text, open my misc.txt file in notepad++, place cursor at end of file, jump to new line and paste text
+^x::
 	Send ^{c}
 	run, %notePadPlusPlus% %miscFile%
 	sleep 500
