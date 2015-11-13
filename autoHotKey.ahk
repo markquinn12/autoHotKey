@@ -44,6 +44,7 @@ global autohotKeyFile := "C:\GitRepositories\autoHotKey\autoHotKey.ahk"
 global tortoiseSvn := "C:\Program Files\TortoiseSVN\bin\TortoiseProc.exe"
 global webappDirectory := headDirectory . "\bagmanager\bagmanager-webapp"
 global junitDirectory := headDirectory . "\bagmanager\bagmanager-junit"
+global bagmanagerDirectory := headDirectory . "\bagmanager"
 global systemInterfaceDirectory := bmgrDirectory . "\system-interface\bin"
 global systemInterface := "sysi-bootstrap-console.bat"
 
@@ -266,6 +267,17 @@ return
 	commands=
 		(join&
 			cd %junitDirectory%
+			mvn clean install -DskipTests
+		)
+	runwait, %comspec% /k %commands%
+return
+
+;########################################### runb ####################################################################
+; hotstring to run mvn clean install -DskipTests on our bagmanagerDirectory directory
+::runb::
+	commands=
+		(join&
+			cd %bagmanagerDirectory%
 			mvn clean install -DskipTests
 		)
 	runwait, %comspec% /k %commands%
