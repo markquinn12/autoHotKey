@@ -25,9 +25,10 @@
 ; passkey: enters my passpack key
 ; mvnc: sends mvn clean install
 ; mvns: sends mvn clean install -DskipTests
-; runr: runs maven clean install on head directory
-; runw: runs maven clean install -DskipTests on bagmanager-webapp
-; runj: runs maven clean install -DskipTests on bagmanager-junit
+; mvnr: runs maven clean install on head directory 
+; mvnw: runs maven clean install -DskipTests on bagmanager-webapp directory
+; mvnj: runs maven clean install -DskipTests on bagmanager-junit directory
+; mvnb: runs maven clean install -DskipTests on the bagmanager directory
 
 ;########################################## Global Variables ######################################################
 global headDirectory := "C:\HEAD"
@@ -239,9 +240,9 @@ return
 	Send, mvn clean install -DskipTests
 return
 
-;########################################### runr ###################################################################
+;########################################### mvnr ###################################################################
 ; hotstring to run mvn clean install -DskipTests on our head directory
-::runr::
+::mvnr::
 	commands=
 		(join&
 			cd %headDirectory%
@@ -250,9 +251,9 @@ return
 	runwait, %comspec% /k %commands%
 return
 
-;########################################### runw ####################################################################
+;########################################### mvnw ####################################################################
 ; hotstring to run mvn clean install -DskipTests on our webapp directory
-::runw::
+::mvnw::
 	commands=
 		(join&
 			cd %webappDirectory%
@@ -261,9 +262,9 @@ return
 	runwait, %comspec% /k %commands%
 return
 
-;########################################### runj ####################################################################
+;########################################### mvnj ####################################################################
 ; hotstring to run mvn clean install -DskipTests on our junit directory
-::runj::
+::mvnj::
 	commands=
 		(join&
 			cd %junitDirectory%
@@ -272,9 +273,9 @@ return
 	runwait, %comspec% /k %commands%
 return
 
-;########################################### runb ####################################################################
+;########################################### mvnb ####################################################################
 ; hotstring to run mvn clean install -DskipTests on our bagmanagerDirectory directory
-::runb::
+::mvnb::
 	commands=
 		(join&
 			cd %bagmanagerDirectory%
