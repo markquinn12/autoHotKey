@@ -35,7 +35,7 @@ global headDirectory := "C:\HEAD"
 global bagmanagerDocs := "C:\Users\bagmanager\Dropbox\Bagmanager"
 global bmgrDirectory := "C:\appl\sita\bmgr"
 
-global jbossLogs := "C:\jbdevstudio\runtimes\jboss-eap\standalone\log"
+global jbossLogs := "C:\jbdevstudio64\runtimes\jboss-eap\standalone\log"
 global deployDirectory := bmgrDirectory . "\deploy"
 global notePadPlusPlus := "C:\Program Files (x86)\Notepad++\notepad++.exe"
 global miscFile := bagmanagerDocs . "\Misc docs\misc.txt"
