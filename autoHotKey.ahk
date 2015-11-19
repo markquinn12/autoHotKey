@@ -16,10 +16,11 @@
 ; Win-N: open selected file in notepad++
 ; Win-J: open Jboss deploy directory
 ; Win-A: opens autohotkey file
-; Win-Q: copy bsm file: aFileToCopy.txt to input/bim folder
+; Win-Q: copy bsm file: aFileToCopy.txt to input/bim
 ; Win-.: opens the Tortoise SVN commit screen at our head directory
 ; Win-/: opens the Tortoise SVN log screen at our head directory
 ; Win-I: runs our system interface bat file
+; WIN-Z: open chrome and search Google for selection, text copied to clipboard or open URL
 
 ;########################################## HotStrings #############################################################
 ; passkey: enters my passpack key
@@ -29,11 +30,16 @@
 ; mvnw: runs maven clean install -DskipTests on bagmanager-webapp directory
 ; mvnj: runs maven clean install -DskipTests on bagmanager-junit directory
 ; mvnb: runs maven clean install -DskipTests on the bagmanager directory
+; ,dd: hotstring to insert the date
+; ,tt: hotstring to insert the time
+; ,dt: hotstring to insert the date time
+; ,127: hotstring to enter 127.0.0.1
 
 ;########################################## Global Variables ######################################################
 global headDirectory := "C:\HEAD"
 global bagmanagerDocs := "C:\Users\bagmanager\Dropbox\Bagmanager"
 global bmgrDirectory := "C:\appl\sita\bmgr"
+global chrome := "chrome.exe"
 
 global jbossLogs := "C:\jbdevstudio64\runtimes\jboss-eap\standalone\log"
 global deployDirectory := bmgrDirectory . "\deploy"
@@ -167,6 +173,33 @@ return
 	Send ^{s}
 return
 
+;########################################### WIN-Z #################################################################
+;Open chrome and search Google for selection, text copied to clipboard or open URL
+#z:: 
+;Copy Clipboard to prevClipboard variable, clear Clipboard. 
+  prevClipboard := ClipboardAll
+  Clipboard = 
+;Copy current selection, continue if no errors.
+  SendInput, ^c 
+  ClipWait, 2
+  if !(ErrorLevel) {
+;Convert Clipboard to text, auto-trim leading and trailing spaces and tabs.
+    Clipboard = %Clipboard%
+;Clean Clipboard: change carriage returns to spaces, change >=1 consecutive spaces to +
+    Clipboard := RegExReplace(RegExReplace(Clipboard, "\r?\n"," "), "\s+","+")
+;Open URLs, Google non-URLs. URLs contain . but do not contain + or .. or @
+    if Clipboard contains +,..,@ 
+      Run, %chrome% www.google.ie/search?q=%Clipboard%
+    else if Clipboard not contains .
+      Run, %chrome% www.google.ie/search?q=%Clipboard%
+    else
+      Run, %chrome% %Clipboard%
+  } 
+;Restore Clipboard, clear prevClipboard variable.
+  Clipboard := prevClipboard
+  prevClipboard =
+return
+
 ;####################################################################################################################
 ;########################################### Numpad keys ############################################################
 ;####################################################################################################################
@@ -283,3 +316,29 @@ return
 		)
 	runwait, %comspec% /k %commands%
 return
+
+;########################################### ,dd ####################################################################
+; hotstring to insert the date
+:*:,dd::
+    FormatTime, CurrentDateTime,, yyyy-MM-dd
+    SendInput %CurrentDateTime%
+    return
+
+;########################################### ,tt ####################################################################
+; hotstring to insert the time
+:*:,tt::
+    FormatTime, CurrentDateTime,, HH:mm
+    SendInput %CurrentDateTime%
+    return
+	
+;########################################### ,dt ####################################################################
+; hotstring to insert the date time
+:*:,dt::
+    FormatTime, CurrentDateTime,, yyyy-MM-dd HH:mm
+    SendInput %CurrentDateTime%
+    return
+
+;########################################### ,127 ####################################################################
+; hotstring to enter 127.0.0.1
+:*:,127::127.0.0.1
+	return
