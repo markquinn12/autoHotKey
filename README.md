@@ -19,4 +19,8 @@ You can double click on the .ahk file, this will execute the script and listen f
 
 A good idea is to create a shortcut to the script. Then place this shortcut in the windows "startup" folder which will execute the script upon startup.
 
+There is also an Autocorrect script which is very useful. This can be found [here:](https://www.autohotkey.com/download/AutoCorrect.ahk).
+
+Just download and run the same as the script above.
+
 Only tested on Windows 7.
