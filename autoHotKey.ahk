@@ -1,5 +1,6 @@
 ;########################################## Resources #############################################################
 ;Tested for Windows 7 only
+;########################################## List of hotkeys #######################################################
 ;# Win (Windows logo key) 
 ;! Alt 
 ;^ Control 
@@ -9,11 +10,11 @@
 ;########################################## Commands ##############################################################
 ; Win-C: open a command prompt for active window or else c:
 ; Win-B: open the documents folder
-; Win-K: open the documents folder
+; Win-K: open the Jboss logs folder
 ; Win-H: open the HEAD folder
 ; WIN-\: open the bagmanager\bagmanager-service-container directory
 ; Win-M: open misc.txt file in notepad++ and place cursor at end of file
-; CTRL+X: copy highlighted text, open my misc.txt file in notepad++, place cursor at end of file, jump to new line and paste text
+; CTRL-X: copy highlighted text, open my misc.txt file in notepad++, place cursor at end of file, jump to new line and paste text
 ; Win-N: open selected file in notepad++
 ; Win-J: open Jboss deploy directory
 ; Win-A: opens autohotkey file
@@ -23,27 +24,26 @@
 ; Win-I: runs our system interface bat file
 ; WIN-Z: open chrome and search Google for selection, text copied to clipboard or open URL
 ; Win-,: runs sonar
-; Ctrl-V: allows ctrl-v in command window
+; CTRL-V: allows ctrl-v in command window
 	
 ;########################################## HotStrings #############################################################
-; passkey: enters my passpack key
+; #ip : opens a GUI with list of IP addresses
+; #pass: enters my passpack key
 ; #test : sends "mvn clean install"
 ; #skip: sends "mvn clean install -DskipTests"
 ; #sonar : sends "mvn sonar:sonar"
-; #mvnr : runs maven clean install on head directory 
-; #mvnw : runs maven clean install -DskipTests on bagmanager-webapp directory
-; #mvnj : runs maven clean install -DskipTests on bagmanager-junit directory
-; #mvnb : runs maven clean install -DskipTests on the bagmanager directory
+; #mvnr : runs "maven clean install -DskipTests" on head directory 
+; #mvnw : runs "maven clean install -DskipTests" on bagmanager-webapp directory
+; #mvnj : runs "maven clean install -DskipTests" on bagmanager-junit directory
+; #mvnb : runs "maven clean install -DskipTests" on the bagmanager directory
 ; #dd : hotstring to insert the date
 ; #tt : hotstring to insert the time
 ; #dt : hotstring to insert the date time
-; #ip : opens a GUI with list of IP addresses - still bugs in this
-; #vm : oepns a GUI with list of VM ip addresses - still bugs in this
 ; #127 : hotstring to enter 127.0.0.1
 ; #print : hotstring to enter printer config for reconnecting
-; #bsm : will generate a BMS - still bugs in this
 ; ### : will generate a line of hashes
 ; *** : will generate a line of stars 
+; `   : pressing the tilda key - "`" will send "backspace"
 
 ;########################################## Global Variables ######################################################
 global headDirectory := "C:\HEAD"
@@ -64,8 +64,6 @@ global junitDirectory := headDirectory . "\bagmanager\bagmanager-junit"
 global bagmanagerDirectory := headDirectory . "\bagmanager"
 global systemInterfaceDirectory := bmgrDirectory . "\system-interface\bin"
 global systemInterface := "sysi-bootstrap-console.bat"
-global fElement := ".F/KL5555/%today%/DUB/Y"
-global sElement := ".S/Y/10C/C/098/888///A"
 global serviceContainerDirectory := headDirectory . "\bagmanager\bagmanager-service-container"
 global sonarDirectory := "C:\sonar-3.7.4\bin\windows-x86-64\"
 global sonar := "StartSonar.bat"
@@ -236,7 +234,7 @@ return
 ; Allows Ctrl-V in cmd window.
 #IfWinActive ahk_class ConsoleWindowClass
 ^V::
-SendInput {Raw}%clipboard%
+	SendInput {Raw}%clipboard%
 return
 #IfWinActive
 
@@ -298,7 +296,7 @@ return
 
 ;########################################### #pass ################################################################
 ; hotstring for passpack key: send my passpack key
-::#pass::hello and welcome to passpack
+::#pass::passpack key
 return
 
 ;########################################### #test ###################################################################
@@ -362,21 +360,21 @@ return
 :*:#dd::
     FormatTime, CurrentDateTime,, yyyy-MM-dd
     SendInput %CurrentDateTime%
-    return
+return
 
 ;########################################### #tt ####################################################################
 ; hotstring to insert the time
 :*:#tt::
     FormatTime, CurrentDateTime,, HH:mm
     SendInput %CurrentDateTime%
-    return
+return
 	
 ;########################################### #dt ####################################################################
 ; hotstring to insert the date time
 :*:#dt::
     FormatTime, CurrentDateTime,, yyyy-MM-dd HH:mm
     SendInput %CurrentDateTime%
-    return
+return
 
 ;########################################### #127 ####################################################################
 ; hotstring to enter 127.0.0.1
@@ -395,28 +393,52 @@ return
 	Send, **********************************************************************************************************************
 return
 
-;########################################### #vm #################################################################### 
-;Open a GUI and let user select IP address
-:*:#vm:: 
+;########################################### #printer ####################################################################
+; hotstring to enter printer settings
+:*:#printer::\\ltrfps01
+return
+
+
+;########################################### #sonar ###################################################################
+; hotstring to send: mvn sonar:sonar
+:*:#sonar::
+	Send, mvn sonar:sonar
+return
+
+;###########################################    `     ###################################################################
+; converts "`" - tilda to the backspace key - no more left arm stretching!
+$`::Backspace
+return
+	
+;####################################################################################################################
+;########################################### GUIs ###################################################################
+;####################################################################################################################
+;########################################### #ip #################################################################### 
+;Open a GUI and lets user select IP address
+:*:#ip:: 
 ; Create the ListView with two columns
 Gui 1:Default
 Gui, Add, ListView, r20 w300 gMyListView, Description|IP Address
 
-LV_Add("", "Corporate VM1", "ipAddressHere")
-LV_Add("", "Corporate VM2", "ipAddressHere")
-LV_Add("", "Corporate VM3", "ipAddressHere")
-LV_Add("", "Corporate VM4", "ipAddressHere")
-LV_Add("", "Corporate VM5", "ipAddressHere")
-LV_Add("", "Corporate VM9", "ipAddressHere")
-LV_Add("", "Corporate London DB", "ipAddressHere")
-LV_Add("", "Corporate Baglab", "ipAddressHere")
+LV_Add("", "Corporate VM1", "57.5.3.148")
+LV_Add("", "Corporate VM2", "57.5.3.149")
+LV_Add("", "Corporate VM3", "57.4.2.130")
+LV_Add("", "Corporate VM4", "57.4.2.134")
+LV_Add("", "Corporate VM5", "57.4.2.137")
+LV_Add("", "Corporate VM9", "57.4.2.152")
+LV_Add("", "Corporate London DB", "57.5.27.15")
+LV_Add("", "Corporate Baglab", "57.4.2.139")
+LV_Add("", "Corporate BAGCVS", "57.5.3.147")
+LV_Add("", "Corporate SVN", "57.6.248.31")
 LV_Add("")
-LV_Add("", "LAB VM1", "ipAddressHere")
-LV_Add("", "LAB VM2", "ipAddressHere")
-LV_Add("", "LAB VM3", "ipAddressHere")
-LV_Add("", "LAB VM4", "ipAddressHere")
-LV_Add("", "LAB VM5", "ipAddressHere")
-LV_Add("", "LAB VM9", "ipAddressHere")
+LV_Add("", "LAB VM1", "10.40.16.91")
+LV_Add("", "LAB VM2", "10.40.16.92")
+LV_Add("", "LAB VM3", "10.40.16.93")
+LV_Add("", "LAB VM4", "10.40.16.94")
+LV_Add("", "LAB VM5", "10.40.16.95")
+LV_Add("", "LAB VM9", "10.40.16.100")
+LV_Add("", "LAB BAGCVS", "10.40.16.51")
+LV_Add("", "LAB SVN", "57.6.248.31")
 
 LV_ModifyCol()  ; Auto-size each column to fit its contents.
 
@@ -450,61 +472,63 @@ if A_GuiEvent = DoubleClick
 }
 return
 
-;########################################### #ip #################################################################### 
-;Open a GUI and let user select IP address
-:*:#ip:: 
+;########################################### WIN-CAPSLOCK #################################################################### 
+;Open a GUI to show all hot keys - hot strings
+#CapsLock::
 ; Create the ListView with two columns
-Gui 2:Default
-Gui, Add, ListView, r20 w300 gMyListView, Description|IP Address
+Gui 3:Default
+Gui, Add, ListView, r30 w500 gMyListView, Shortcut|Command|Description|
 
-LV_Add("", "Corporate BAGCVS", "ipAddressHere")
-LV_Add("", "Corporate SVN", "ipAddressHere")
-LV_Add("")
-LV_Add("", "LAB BAGCVS", "ipAddressHere")
-LV_Add("", "LAB SVN", "ipAddressHere")
+LV_Add("", "Win-C", "#c", "Open a command prompt for active window or else c:")
+LV_Add("", "Win-B", "#b", "Open my documents folder")
+LV_Add("", "Win-K", "#k", "Open the Jboss logs folder")
+LV_Add("", "Win-H", "#h", "Open the HEAD source folder")
+LV_Add("", "Win-\", "#\", "Open the bagmanager\bagmanager-service-container directory")
+LV_Add("", "Win-M", "#m", "Open misc.txt file in notepad++ and place cursor at end of file")
+LV_Add("", "CTRL-X", "^x", "Copy highlighted text to the the misc.txt file in notepad++")
+LV_Add("", "Win-N", "#n", "Open selected file in notepad++")
+LV_Add("", "Win-J", "#j", "Open Jboss deploy directory")
+LV_Add("", "Win-A", "#a", "Opens autohotkey file")
+LV_Add("", "Win-.", "#.", "Opens the Tortoise SVN commit window at the head directory")
+LV_Add("", "Win-/", "#/", "Opens the Tortoise SVN log window at the head directory")
+LV_Add("", "Win-I", "#i", "Runs the system interface bat file")
+LV_Add("", "Win-Z", "#z", "Open chrome and search Google for text selected or open URL")
+LV_Add("", "Win-,", "#,", "Runs sonar")
+LV_Add("", "CTRL-V", "^v", "Allows ctrl-v in command window")
+LV_Add("", "", "", "")
+LV_Add("", "#ip", "#ip", "Opens a GUI of useful IP addresses")
+LV_Add("", "#pass", "#pass", "Sends my passpack key")
+LV_Add("", "#test", "#test", "sends 'mvn clean install'")
+LV_Add("", "#skip", "#skip", "sends 'mvn clean install -DskipTests'")
+LV_Add("", "#sonar", "#sonar", "sends 'mvn sonar:sonar'")
+LV_Add("", "#mvnr", "#mvnr", "runs 'maven clean install -DskipTests' on head directory")
+LV_Add("", "#mvnw", "#mvnw", "runs 'maven clean install -DskipTests' on bagmanager-webapp directory")
+LV_Add("", "#mvnj", "#mvnj", "runs 'maven clean install -DskipTests' on bagmanager-junit directory")
+LV_Add("", "#mvnb", "#mvnb", "runs 'maven clean install -DskipTests' on the bagmanager directory")
+LV_Add("", "#dd", "#dd", "hotstring to insert the date")
+LV_Add("", "#tt", "#tt", "hotstring to insert the time")
+LV_Add("", "#dt", "#dt", "hotstring to insert the dateTime")
+LV_Add("", "#127", "#127", "hotstring to insert 127.0.0.1")
+LV_Add("", "#print", "print", "hotstring to enter printer config for reconnecting")
+LV_Add("", "###", "###", "will generate a line of hashes")
+LV_Add("", "***", "***", "will generate a line of stars ")
+LV_Add("", "`", "`", "pressing the tilda key - '`' will send 'backspace'")
 
-LV_ModifyCol()  ; Auto-size each column to fit its contents.
+LV_ModifyCol(1,50)
+LV_ModifyCol(2,70)
+LV_ModifyCol(3,355)
 
 ; Display the window and return. The script will be notified whenever the user double clicks a row or presses enter
 Gui, Show
 return
 
-Esc::
-	Gui Cancel
-return
-
-MyListView2:
+MyListView3:
 if A_GuiEvent = DoubleClick
 {
-    LV_GetText(RowText, A_EventInfo , 2)  ;Get the text from the row's first field.
+    LV_GetText(RowText, A_EventInfo, 2) 
 	Gui Cancel
 	Send, %RowText%
 }
-return
-
-;########################################### #printer ####################################################################
-; hotstring to enter printer settings
-:*:#printer::\\ltrfps01
-	return
-
-;########################################### #bsm ####################################################################
-; hotstring to a BSM
-:*:#bsm::
-	FormatTime, today,, ddMMM
-	Send, BSM{Enter}
-	Send, .V/1LLKY{Enter}{Enter}
-	Send, %fElement%{Enter}{Enter}
-	Send, .N/0074555555020{Enter}{Enter}
-	Send, %sElement%{Enter}{Enter}
-	Send, .P/QUINN{Enter}{Enter}
-	Send, .Y/KL784512/GOLD{Enter}{Enter}
-	Send, .X/NON/CLR//XRAY/ENF{Enter}{Enter}
-	Send, ENDBSM
+return	
 	
-return
-
-;########################################### #sonar ###################################################################
-; hotstring to send mvn clean install
-:*:#sonar::
-	Send, mvn sonar:sonar
-return
+;###############################################################################################################################
