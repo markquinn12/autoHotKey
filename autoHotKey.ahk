@@ -4,8 +4,12 @@
 ;# Win (Windows logo key) 
 ;! Alt 
 ;^ Control 
-;+ Shift 
 ;&  An ampersand may be used between any two keys or mouse buttons to combine them into a custom hotkey.  
+;+ Shift 
+
+;########################################## GUIs ##############################################################
+; Win-CapsLock : Opens a GUI with a list of allhotkeys and hotstrings - needs to be manually maintained
+; #ip : opens a GUI with list of IP addresses
 
 ;########################################## Commands ##############################################################
 ; Win-C: open a command prompt for active window or else c:
@@ -25,9 +29,9 @@
 ; WIN-Z: open chrome and search Google for selection, text copied to clipboard or open URL
 ; Win-,: runs sonar
 ; CTRL-V: allows ctrl-v in command window
-	
+; F4: sends my password for agora
+
 ;########################################## HotStrings #############################################################
-; #ip : opens a GUI with list of IP addresses
 ; #pass: enters my passpack key
 ; #test : sends "mvn clean install"
 ; #skip: sends "mvn clean install -DskipTests"
@@ -238,6 +242,12 @@ return
 return
 #IfWinActive
 
+;########################################### F4 ###################################################################
+; hotkey when f4 is pressed sends my agora password
+F4::
+	Send, Not checking this in!{Enter}
+return
+
 ;####################################################################################################################
 ;########################################### Numpad keys ############################################################
 ;####################################################################################################################
@@ -296,7 +306,7 @@ return
 
 ;########################################### #pass ################################################################
 ; hotstring for passpack key: send my passpack key
-::#pass::passpack key
+::#pass::not checking this in!
 return
 
 ;########################################### #test ###################################################################
@@ -413,6 +423,7 @@ return
 ;####################################################################################################################
 ;########################################### GUIs ###################################################################
 ;####################################################################################################################
+
 ;########################################### #ip #################################################################### 
 ;Open a GUI and lets user select IP address
 :*:#ip:: 
@@ -473,7 +484,7 @@ if A_GuiEvent = DoubleClick
 return
 
 ;########################################### WIN-CAPSLOCK #################################################################### 
-;Open a GUI to show all hot keys - hot strings
+;Open a GUI to show all hot keys - hot strings - needs to be manually maintained
 #CapsLock::
 ; Create the ListView with two columns
 Gui 3:Default
