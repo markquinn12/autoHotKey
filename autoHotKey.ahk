@@ -306,7 +306,7 @@ return
 
 ;########################################### #pass ################################################################
 ; hotstring for passpack key: send my passpack key
-::#pass::not checking this in!
+::#pass::never!!
 return
 
 ;########################################### #test ###################################################################
@@ -419,6 +419,30 @@ return
 ; converts "`" - tilda to the backspace key - no more left arm stretching!
 $`::Backspace
 return
+
+;########################################### ?ip ###################################################################
+; hotstring open command line and send ipconfig
+:*:?ip::
+	commands=
+		(join&
+			ipconfig
+		)
+	runwait, %comspec% /k %commands%	
+return
+
+;########################################### #serial ###################################################################
+; hotstring to send code for serializing request and response data
+:*:#serial::
+
+SendInput `
+(
+String requestString = SerializerUtil.convertObjectToString ( requestDTO );
+System.out.println ( requestString );
+
+String reponseString = SerializerUtil.convertObjectToString ( responseDTO );
+System.out.println ( reponseString );
+)
+return
 	
 ;####################################################################################################################
 ;########################################### GUIs ###################################################################
@@ -429,7 +453,7 @@ return
 :*:#ip:: 
 ; Create the ListView with two columns
 Gui 1:Default
-Gui, Add, ListView, r20 w300 gMyListView, Description|IP Address
+Gui, Add, ListView, r27 w300 gMyListView, Description|IP Address
 
 LV_Add("", "Corporate VM1", "57.5.3.148")
 LV_Add("", "Corporate VM2", "57.5.3.149")
@@ -450,6 +474,14 @@ LV_Add("", "LAB VM5", "10.40.16.95")
 LV_Add("", "LAB VM9", "10.40.16.100")
 LV_Add("", "LAB BAGCVS", "10.40.16.51")
 LV_Add("", "LAB SVN", "57.6.248.31")
+LV_Add("")
+LV_Add("", "NATD VM1", "10.185.40.65")
+LV_Add("", "NATD VM2", "10.185.40.66")
+LV_Add("", "NATD VM3", "10.185.40.67")
+LV_Add("", "NATD VM4", "10.185.40.68")
+LV_Add("", "NATD VM5", "10.185.40.84")
+LV_Add("", "NATD VM9", "10.185.40.69")
+LV_Add("", "NATD BAGCVS", "10.185.40.82")
 
 LV_ModifyCol()  ; Auto-size each column to fit its contents.
 
@@ -506,6 +538,7 @@ LV_Add("", "Win-I", "#i", "Runs the system interface bat file")
 LV_Add("", "Win-Z", "#z", "Open chrome and search Google for text selected or open URL")
 LV_Add("", "Win-,", "#,", "Runs sonar")
 LV_Add("", "CTRL-V", "^v", "Allows ctrl-v in command window")
+LV_Add("", "F4", "F4", "Sends my password for Agora")
 LV_Add("", "", "", "")
 LV_Add("", "#ip", "#ip", "Opens a GUI of useful IP addresses")
 LV_Add("", "#pass", "#pass", "Sends my passpack key")
