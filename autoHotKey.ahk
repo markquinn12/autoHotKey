@@ -248,6 +248,11 @@ F4::
 	Send, Not checking this in!{Enter}
 return
 
+;######################################### F7 ####################################################
+; Switches to lotus notes
+#IfWinExist ahk_class SWT_Window0
+F7::WinActivate  ; Activates the window found by #IfWin.
+
 ;####################################################################################################################
 ;########################################### Numpad keys ############################################################
 ;####################################################################################################################
@@ -443,6 +448,40 @@ String reponseString = SerializerUtil.convertObjectToString ( responseDTO );
 System.out.println ( reponseString );
 )
 return
+
+;########################################### #xmltest ###################################################################
+; hotstring to send examples for asserting Junit XML test responses
+:*:#xmltest::
+
+SendInput `
+(
+<expectedResponse class="aero.sita.bagmanager.response.package.name.goes.here">
+<resultDTO>
+<result>SUCCESS</result>
+<resultCode>BAGSVC_S_1001</resultCode>
+</resultDTO>
+</expectedResponse>
+<printResponseXML>false</printResponseXML>
+<expectedResponseObject>
+<expectedObjectList>
+<expectedObject class="aero.sita.bagmanager.junit.message.ExpectedObject">
+<xPathDesc>Insert your Xpath description here</xPathDesc>
+<xPath>//insert/xPath/here</xPath>
+<value>true</value>
+</expectedObject>
+</expectedObjectList>
+</expectedResponseObject>
+<expectedDBResult>
+<dbResultList>
+<dbResult class="aero.sita.bagmanager.junit.message.DBResult">
+<queryDesc>Insert SQL query description here</queryDesc>
+<query>select count(*) from person where first_name ='joe'</query>
+<expectedCount>1</expectedCount>
+</dbResult>
+</dbResultList>
+</expectedDBResult>
+)
+return
 	
 ;####################################################################################################################
 ;########################################### GUIs ###################################################################
@@ -539,6 +578,7 @@ LV_Add("", "Win-Z", "#z", "Open chrome and search Google for text selected or op
 LV_Add("", "Win-,", "#,", "Runs sonar")
 LV_Add("", "CTRL-V", "^v", "Allows ctrl-v in command window")
 LV_Add("", "F4", "F4", "Sends my password for Agora")
+LV_Add("", "F7", "F7", "Opens lotus notes")
 LV_Add("", "", "", "")
 LV_Add("", "#ip", "#ip", "Opens a GUI of useful IP addresses")
 LV_Add("", "#pass", "#pass", "Sends my passpack key")
