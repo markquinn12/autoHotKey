@@ -30,6 +30,7 @@
 ; Win-,: runs sonar
 ; CTRL-V: allows ctrl-v in command window
 ; F4: sends my password for agora
+; F7: Opens lotus notes
 
 ;########################################## HotStrings #############################################################
 ; #pass: enters my passpack key
