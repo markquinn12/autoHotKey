@@ -23,4 +23,10 @@ There is also an Autocorrect script which is very useful. This can be found [her
 
 Just download and run the same as the script above.
 
+##Development:
+
+You can use [scite4ahk](http://fincs.ahk4.net/scite4ahk/) for basuc autoHotKey development and debugging.
+
+Debugging usage can be found here: [scite4ahk](http://fincs.ahk4.net/scite4ahk/pages/debugger.htm)
+
 Only tested on Windows 7.
