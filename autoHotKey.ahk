@@ -145,6 +145,7 @@ return
 ;########################################### Win-Q ##################################################################
 ; Win-Q: copy bsm file: aFileToCopy.txt to input/bim folder
 #q::
+	 Run, %bimDirectory%
 	 FileCopy, %aFileToCopy%, %bimDirectory%
 return
 
@@ -594,7 +595,9 @@ LV_Add("", "#dd", "#dd", "hotstring to insert the date")
 LV_Add("", "#tt", "#tt", "hotstring to insert the time")
 LV_Add("", "#dt", "#dt", "hotstring to insert the dateTime")
 LV_Add("", "#127", "#127", "hotstring to insert 127.0.0.1")
-LV_Add("", "#print", "print", "hotstring to enter printer config for reconnecting")
+LV_Add("", "#print", "#print", "hotstring to enter printer config for reconnecting")
+LV_Add("", "#serial", "#serial", "will insert the serialization utiliity methods")
+LV_Add("", "#xmltest", "#xmltest", "will insert xml test assertion structure")
 LV_Add("", "###", "###", "will generate a line of hashes")
 LV_Add("", "***", "***", "will generate a line of stars ")
 LV_Add("", "`", "`", "pressing the tilda key - '`' will send 'backspace'")
