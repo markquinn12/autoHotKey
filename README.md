@@ -17,6 +17,8 @@ Download my sample script: [autoHotKey.ahk](autoHotKey.ahk)
 
 You can double click on the .ahk file, this will execute the script and listen for commands. You can then see the autoHotKey icon on the task bar.
 
+If you have run my [autoHotKey.ahk](autoHotKey.ahk) file then you can view a list of all hotkeys which I have created by pressing: WinKey + CapsLock
+
 A good idea is to create a shortcut to the script. Then place this shortcut in the windows "startup" folder which will execute the script upon startup.
 
 There is also an Autocorrect script which is very useful. This can be found [here:](https://www.autohotkey.com/download/AutoCorrect.ahk)
@@ -26,6 +28,8 @@ Just download and run the same as the script above.
 ##Development:
 
 You can use [scite4ahk](http://fincs.ahk4.net/scite4ahk/) for basic autoHotKey development and debugging.
+
+I have added lots of comments to my [.ahk](autoHotKey.ahk) file, so please read through the comments for an explanation of each hotkey and hotstring which I have created.
 
 Debugging usage can be found here: [scite4ahk](http://fincs.ahk4.net/scite4ahk/pages/debugger.htm)
 
