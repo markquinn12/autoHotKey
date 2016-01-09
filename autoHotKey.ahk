@@ -28,6 +28,7 @@
 ; Win-I: runs our system interface bat file
 ; WIN-Z: open chrome and search Google for selection, text copied to clipboard or open URL
 ; Win-,: runs sonar
+; Win-Y: oepns the system-interface logs directory
 ; CTRL-V: allows ctrl-v in command window
 ; F4: sends my password for agora
 ; F7: Opens lotus notes
@@ -72,6 +73,7 @@ global systemInterface := "sysi-bootstrap-console.bat"
 global serviceContainerDirectory := headDirectory . "\bagmanager\bagmanager-service-container"
 global sonarDirectory := "C:\sonar-3.7.4\bin\windows-x86-64\"
 global sonar := "StartSonar.bat"
+global systemInterfaceLogs := "C:\var\log\bagmanager"
 
 ;####################################################################################################################
 ;########################################### Commands ###############################################################
@@ -94,6 +96,12 @@ return
 ; Win-B: open the documents folder
 #b::
 	Run, %bagmanagerDocs%
+return
+
+;########################################### Win-Y ##################################################################
+; Win-Y: open the system-interface logs folder
+#y::
+	Run, %systemInterfaceLogs%
 return
 
 ;########################################### Win-K ##################################################################
@@ -521,8 +529,10 @@ LV_Add("", "NATD VM2", "10.185.40.66")
 LV_Add("", "NATD VM3", "10.185.40.67")
 LV_Add("", "NATD VM4", "10.185.40.68")
 LV_Add("", "NATD VM5", "10.185.40.84")
-LV_Add("", "NATD VM9", "10.185.40.69")
+LV_Add("", "NATD VM9", "10.185.40.69")	
 LV_Add("", "NATD BAGCVS", "10.185.40.82")
+LV_Add("")
+LV_Add("", "Shared Drive", "10.60.101.152")
 
 LV_ModifyCol()  ; Auto-size each column to fit its contents.
 
@@ -532,7 +542,7 @@ return
 
 ; Bug with enter key, can't get it to work after the 2nd time GUI is shown to the user
 #IfWinActive ahk_class AutoHotkeyGUI
-Enter::
+Enter::	
 RowNumber = 0  ; This causes the first loop iteration to start the search at the top of the list.
 	GuiControlGet, FocusedControl, FocusV
 	RowNumber := LV_GetNext(0, "Focused")
@@ -578,6 +588,7 @@ LV_Add("", "Win-/", "#/", "Opens the Tortoise SVN log window at the head directo
 LV_Add("", "Win-I", "#i", "Runs the system interface bat file")
 LV_Add("", "Win-Z", "#z", "Open chrome and search Google for text selected or open URL")
 LV_Add("", "Win-,", "#,", "Runs sonar")
+LV_Add("", "Win-Y", "#y", "Opens the system-interface logs folder")
 LV_Add("", "CTRL-V", "^v", "Allows ctrl-v in command window")
 LV_Add("", "F4", "F4", "Sends my password for Agora")
 LV_Add("", "F7", "F7", "Opens lotus notes")
