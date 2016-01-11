@@ -27,8 +27,9 @@
 ; Win-/: opens the Tortoise SVN log screen at our head directory
 ; Win-I: runs our system interface bat file
 ; WIN-Z: open chrome and search Google for selection, text copied to clipboard or open URL
+; WIN-W: open the screenshots folder and open the last created file
 ; Win-,: runs sonar
-; Win-Y: oepns the system-interface logs directory
+; Win-w: oepns the system-interface logs directory
 ; CTRL-V: allows ctrl-v in command window
 ; F4: sends my password for agora
 ; F7: Opens lotus notes
@@ -74,6 +75,7 @@ global serviceContainerDirectory := headDirectory . "\bagmanager\bagmanager-serv
 global sonarDirectory := "C:\sonar-3.7.4\bin\windows-x86-64\"
 global sonar := "StartSonar.bat"
 global systemInterfaceLogs := "C:\var\log\bagmanager"
+global screenshotsDirectory := bagmanagerDocs . "\myScreenShots"
 
 ;####################################################################################################################
 ;########################################### Commands ###############################################################
@@ -96,6 +98,24 @@ return
 ; Win-B: open the documents folder
 #b::
 	Run, %bagmanagerDocs%
+return
+
+;########################################### Win-W ##################################################################
+; Win-W: open the screenshots folder and open the last created file
+#w::
+	Run, %screenshotsDirectory%
+	
+	Loop, %screenshotsDirectory%\*.png
+	{
+		If (A_LoopFileTimeCreated>Rec)
+		{
+			FPath=%A_LoopFileFullPath%
+			Rec=%A_LoopFileTimeCreated%
+		}
+	}	
+	
+	Run %Fpath%
+	
 return
 
 ;########################################### Win-Y ##################################################################
@@ -589,6 +609,7 @@ LV_Add("", "Win-I", "#i", "Runs the system interface bat file")
 LV_Add("", "Win-Z", "#z", "Open chrome and search Google for text selected or open URL")
 LV_Add("", "Win-,", "#,", "Runs sonar")
 LV_Add("", "Win-Y", "#y", "Opens the system-interface logs folder")
+LV_Add("", "Win-W", "#w", "Opens the screenshots folder and open the last created file")
 LV_Add("", "CTRL-V", "^v", "Allows ctrl-v in command window")
 LV_Add("", "F4", "F4", "Sends my password for Agora")
 LV_Add("", "F7", "F7", "Opens lotus notes")
