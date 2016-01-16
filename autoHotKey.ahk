@@ -465,6 +465,9 @@ return
 	runwait, %comspec% /k %commands%	
 return
 
+;########################################### #jk ###################################################################
+:*:#jk::John Krzymuski 
+
 ;########################################### #serial ###################################################################
 ; hotstring to send code for serializing request and response data
 :*:#serial::
