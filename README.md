@@ -8,7 +8,7 @@ AutoHotkey is a free, open-source custom scripting language for Microsoft Window
 AutoHotKey can be used for a variety of tasks. Here you will find some scripts and ideas.
 
 ##To Install:
-choco install autohotkey
+`choco install autohotkey`
 
 or if you don't use chocolatey then direct from: http://www.autohotkey.com/
 
