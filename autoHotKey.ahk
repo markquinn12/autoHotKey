@@ -23,10 +23,6 @@
 ; CTRL-V: allows ctrl-v in command window
 
 ;########################################## HotStrings #############################################################
-; #pass: enters my passpack key
-; #test : sends "mvn clean install"
-; #skip: sends "mvn clean install -DskipTests"
-; #sonar : sends "mvn sonar:sonar"
 ; #mvnr : runs "maven clean install -DskipTests" on head directory 
 ; #mvnw : runs "maven clean install -DskipTests" on bagmanager-webapp directory
 ; #mvnj : runs "maven clean install -DskipTests" on bagmanager-junit directory
@@ -144,7 +140,7 @@ return
 return
 
 ;########################################### Win-, ##################################################################
-; Win-I: starts sonar
+; Win-,: starts sonar-
 #,::	
 	commands=
 		(join&
@@ -177,8 +173,9 @@ return
 	Winwaitactive, ahk_class Notepad++
 	ControlGetFocus, control, A
 	Send ^{End}
-	Send  {Enter}{Home}{Enter}
+	Send  {Enter}{Home}
 	Send ^{v}
+	Send  {Enter}
 	Send ^{s}
 return
 
@@ -279,52 +276,3 @@ return
 		)
 	runwait, %comspec% /k %commands%	
 return
-
-;####################################################################################################################
-;########################################### GUIs ###################################################################
-;####################################################################################################################
-
-;########################################### WIN-CAPSLOCK #################################################################### 
-;Open a GUI to show all hot keys - hot strings - needs to be manually maintained
-#CapsLock::
-; Create the ListView with two columns
-Gui 3:Default
-Gui, Add, ListView, r30 w500 gMyListView, Shortcut|Command|Description|
-
-LV_Add("", "Win-C", "#c", "Open a command prompt for active window or else c:")
-LV_Add("", "Win-M", "#m", "Open misc.txt file in notepad++ and place cursor at end of file")
-LV_Add("", "CTRL-X", "^x", "Copy highlighted text to the the misc.txt file in notepad++")
-LV_Add("", "Win-N", "#n", "Open selected file in notepad++")
-LV_Add("", "Win-A", "#a", "Opens autohotkey file")
-LV_Add("", "Win-.", "#.", "Opens the Tortoise SVN commit window at the head directory")
-LV_Add("", "Win-/", "#/", "Opens the Tortoise SVN log window at the head directory")
-LV_Add("", "Win-I", "#i", "Runs the system interface bat file")
-LV_Add("", "Win-Z", "#z", "Open chrome and search Google for text selected or open URL")
-LV_Add("", "Win-,", "#,", "Runs sonar")
-LV_Add("", "Win-W", "#w", "Opens the screenshots folder and open the last created file")
-LV_Add("", "CTRL-V", "^v", "Allows ctrl-v in command window")
-LV_Add("", "", "", "")
-LV_Add("", "#mvnr", "#mvnr", "runs 'maven clean install -DskipTests' on head directory")
-LV_Add("", "#mvnw", "#mvnw", "runs 'maven clean install -DskipTests' on bagmanager-webapp directory")
-LV_Add("", "#mvnj", "#mvnj", "runs 'maven clean install -DskipTests' on bagmanager-junit directory")
-LV_Add("", "#mvnb", "#mvnb", "runs 'maven clean install -DskipTests' on the bagmanager directory")
-LV_Add("", "`", "`", "pressing the tilda key - '`' will send 'backspace'")
-
-LV_ModifyCol(1,50)
-LV_ModifyCol(2,70)
-LV_ModifyCol(3,355)
-
-; Display the window and return. The script will be notified whenever the user double clicks a row or presses enter
-Gui, Show
-return
-
-MyListView3:
-if A_GuiEvent = DoubleClick
-{
-    LV_GetText(RowText, A_EventInfo, 2) 
-	Gui Cancel
-	Send, %RowText%
-}
-return	
-	
-;###############################################################################################################################
