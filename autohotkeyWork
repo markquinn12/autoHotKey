@@ -1,0 +1,80 @@
+;########################################## Resources #############################################################
+;Tested for Windows 7 only
+;########################################## List of hotkeys #######################################################
+;# Win (Windows logo key) 
+;! Alt 
+;^ Control 
+;&  An ampersand may be used between any two keys or mouse buttons to combine them into a custom hotkey.  
+;+ Shift 
+
+;########################################## Commands ##############################################################
+; ALT-N: open selected file in notepad++
+; ALT-Z: open chrome and search Google for selection, text copied to clipboard or open URL
+; ALT-W: open the screenshots folder and open the last created file
+
+;########################################## HotStrings #############################################################
+; `   : pressing the tilda key - "`" will send "backspace"/
+
+;########################################## Global Variables ######################################################
+global chrome := "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+
+global notePadPlusPlus := "C:\Program Files (x86)\Notepad++\notepad++.exe"
+global screenshotsDirectory := "I:\Documents\Work\screenshots"
+
+;####################################################################################################################
+;########################################### Commands ###############################################################
+;####################################################################################################################
+
+;########################################### ALT-W ##################################################################
+; ALT-W: open the screenshots folder and open the last created file
+!s::
+	; Run, %screenshotsDirectory%
+	
+	Loop, %screenshotsDirectory%\*.png
+	{
+		If (A_LoopFileTimeCreated>Rec)
+		{
+			FPath=%A_LoopFileFullPath%
+			Rec=%A_LoopFileTimeCreated%
+		}
+	}	
+	
+	Run %Fpath%
+	
+return
+
+;########################################### ALT-Z #################################################################
+;Open chrome and search Google for selection, text copied to clipboard or open URL
+!z:: 
+;Copy Clipboard to prevClipboard variable, clear Clipboard. 
+  prevClipboard := ClipboardAll
+  Clipboard = 
+;Copy current selection, continue if no errors.
+  SendInput, ^c 
+  ClipWait, 2
+  if !(ErrorLevel) {
+;Convert Clipboard to text, auto-trim leading and trailing spaces and tabs.
+    Clipboard = %Clipboard%
+;Clean Clipboard: change carriage returns to spaces, change >=1 consecutive spaces to +
+    Clipboard := RegExReplace(RegExReplace(Clipboard, "\r?\n"," "), "\s+","+")
+;Open URLs, Google non-URLs. URLs contain . but do not contain + or .. or @
+    if Clipboard contains +,..,@ 
+      Run, %chrome% www.google.ie/search?q=%Clipboard%
+    else if Clipboard not contains .
+      Run, %chrome% www.google.ie/search?q=%Clipboard%
+    else
+      Run, %chrome% %Clipboard%
+  } 
+;Restore Clipboard, clear prevClipboard variable.
+  Clipboard := prevClipboard
+  prevClipboard =
+return
+
+;####################################################################################################################
+;########################################### HotStrings #############################################################
+;####################################################################################################################
+
+;###########################################    `     ###################################################################
+; converts "`" - tilda to the backspace key - no more left arm stretching!
+$`::Backspace
+return
